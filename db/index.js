@@ -79,6 +79,20 @@ async function getUserById(userId) {
   } catch (error) {
     throw error;
   }
+};
+
+async function getUserByUsername(username) {
+  try {
+    const { rows: [user] } = await client.query(`
+      SELECT *
+      FROM users
+      WHERE username=$1;
+    `, [username]);
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
 }
 
 // POST methods
@@ -316,6 +330,7 @@ module.exports = {
 	updateUser,
 	getAllUsers,
 	getUserById,
+	getUserByUsername,
 	createPost,
 	updatePost,
 	getAllPosts,
